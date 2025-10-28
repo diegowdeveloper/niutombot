@@ -1,10 +1,10 @@
-from whatsAppService import WhatsAppService
+from .whatsAppService import WhatsAppService
 from fastapi import Response
 from typing import Optional, List, Dict, Any
-from geminiService import GeminiService
-from langChainService import LangChainGemini
-from azureNiutomCompendium import AzureNiutomCompendium
-from tavilySearch import TavilySearch
+from .geminiService import GeminiService
+from .langChainService import LangChainGemini
+from .azureNiutomCompendium import AzureNiutomCompendium
+from .tavilySearch import TavilySearch
 from db import SessionDep
 from sqlmodel import select
 from models import Profesor
