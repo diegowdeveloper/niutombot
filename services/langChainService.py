@@ -11,7 +11,7 @@ from langchain_core.chat_history import (
 )
 from langchain_core.runnables import RunnableWithMessageHistory
 
-from ..models import Pensamiento
+from models import Pensamiento
 from sqlmodel import select
 
 load_dotenv()
