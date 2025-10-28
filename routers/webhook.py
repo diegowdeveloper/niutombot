@@ -5,7 +5,7 @@ from models import Pensamiento
 from db import SessionDep
 import os
 
-from ..services import MessageHandler
+from services import MessageHandler
 
 router = APIRouter()
 load_dotenv()
