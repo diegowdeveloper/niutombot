@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Request, Response
 from dotenv import load_dotenv
-from ..models import Profesor
-from ..models import Pensamiento
-from ..db import SessionDep
+from models import Profesor
+from models import Pensamiento
+from db import SessionDep
 import os
 
 from ..services import MessageHandler

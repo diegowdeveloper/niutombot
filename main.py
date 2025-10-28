@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request, Response
-from .routers import webhook
-from .db import SessionDep, create_all_tables
+from routers import webhook
+from db import create_all_tables
 
 
 app = FastAPI(

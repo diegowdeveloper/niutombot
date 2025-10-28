@@ -3,7 +3,7 @@ from google import genai
 from google.genai import types
 from google.genai.types import UserContent, ModelContent, Part
 from dotenv import load_dotenv
-from ..models import Pensamiento
+from models import Pensamiento
 from sqlmodel import select
 
 load_dotenv()

@@ -1,4 +1,4 @@
-from . import webhook
+import webhook
 
 __all__ = [
     "webhook"
