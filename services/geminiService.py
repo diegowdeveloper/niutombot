@@ -43,8 +43,7 @@ class GeminiService:
             audio            = speech.RecognitionAudio(content=audio_bytes)
             config           = speech.RecognitionConfig(
                 encoding                     = speech.RecognitionConfig.AudioEncoding.OGG_OPUS,
-                language_code                ="es-ES",
-                enable_automatic_punctuation =True
+                language_code                ="es-ES"
             )
 
             response        = client_speech.recognize(config=config, audio=audio)

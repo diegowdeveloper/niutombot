@@ -14,10 +14,8 @@ class WhatsAppService:
     
 
     @staticmethod
-    async def getBytesOfFile(download_url: str):
-        audio_bytes       = await HttpRequest.getBytesFile(download_url)
-        if not audio_bytes:
-            return "Error al procesar los bytes"
+    async def getBytesOfFile(download_url):
+        audio_bytes = await HttpRequest.getBytesFile(download_url)
         return audio_bytes
 
 
