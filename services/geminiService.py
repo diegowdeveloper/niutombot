@@ -1,5 +1,6 @@
-import tempfile
 import os
+import json
+import tempfile
 from google import genai
 from google.genai import types
 from google.genai.types import UserContent, ModelContent, Part
@@ -9,14 +10,21 @@ from sqlmodel import select
 from google.cloud import speech
 
 load_dotenv()
-json_path                                       = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_PATH")
-absolute_path                                   = os.path.abspath(json_path)
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]    = absolute_path
 
 class GeminiService:
 
     def __init__(self, session):
         self.session = session
+
+
+    @staticmethod
+    def setupCredentialsSpeechToText():
+        with tempfile.NamedTemporaryFile(mode="w", delte=False) as temp_file:
+            json_data                                    = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+            parsed_json                                  = json.loads(json_data)
+            json.dump(parsed_json, temp_file)
+            temp_file_path                               = temp_file.name
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_file_path
 
 
     def createPensamiento(self, profesor_id, role, message) -> None:
@@ -42,6 +50,9 @@ class GeminiService:
 
     @staticmethod
     async def processAudioMessage(audio_bytes: bytes):
+
+        GeminiService.setupCredentialsSpeechToText()
+
         try:
             client_speech    = speech.SpeechClient()
             audio            = speech.RecognitionAudio(content=audio_bytes)
