@@ -14,6 +14,8 @@ from langchain_core.runnables import RunnableWithMessageHistory
 from models import Pensamiento
 from sqlmodel import select
 
+from .geminiService import GeminiService
+
 load_dotenv()
 os.environ["GOOGLE_API_KEY"] = os.getenv("GEMINI_API_KEY")
 
@@ -51,9 +53,9 @@ class LangChainGemini:
     async def queryChatSimple(cls, user_message, user, session):
         
         langchainService = cls(session, user.id)
-        model_llm   = ChatGoogleGenerativeAI(model       = "gemini-2.5-flash",
+        model_llm        = ChatGoogleGenerativeAI(model       = "gemini-2.5-flash",
                                              temperature = 0.7,
-                                             max_tokens  = 3000)
+                                             max_tokens  = None)
         
         with_message_history    = RunnableWithMessageHistory(model_llm, langchainService.getSessionHistory)
         results                 = langchainService.getAllPensamientosByIDProfesor(user.id)
@@ -61,7 +63,13 @@ class LangChainGemini:
         if with_message_history:
             response = with_message_history.invoke(
                                         [SystemMessage(content = "Eres un asistente virtual para ayudar a los docentes en sus labores y te llamas Niutom"), HumanMessage(content=user_message)],
-                                        config = langchainService.config)
+                                        config                 = langchainService.config,
+                                        max_retries            = 2
+                                        )
+
+            if not response.content:
+                response_text = GeminiService.queryChatSimple(user_message, user, session)
+                return response_text
 
             return response.content
             
@@ -82,7 +90,7 @@ class LangChainGemini:
 
             trim_tokens = trim_messages(
                 messages,
-                max_tokens    = 100,
+                max_tokens    = 1000,
                 strategy      = "last",
                 token_counter = ChatGoogleGenerativeAI(model = "gemini-2.5-flash")
             )
