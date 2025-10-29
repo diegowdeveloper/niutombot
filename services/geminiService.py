@@ -19,7 +19,7 @@ class GeminiService:
 
     @staticmethod
     def setupCredentialsSpeechToText():
-        with tempfile.NamedTemporaryFile(mode="w", delte=False) as temp_file:
+        with tempfile.NamedTemporaryFile(mode="w", delete=False) as temp_file:
             json_data                                    = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
             parsed_json                                  = json.loads(json_data)
             json.dump(parsed_json, temp_file)
@@ -51,9 +51,8 @@ class GeminiService:
     @staticmethod
     async def processAudioMessage(audio_bytes: bytes):
 
-        GeminiService.setupCredentialsSpeechToText()
-
         try:
+            GeminiService.setupCredentialsSpeechToText()
             client_speech    = speech.SpeechClient()
             audio            = speech.RecognitionAudio(content=audio_bytes)
             config           = speech.RecognitionConfig(
