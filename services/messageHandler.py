@@ -310,6 +310,6 @@ class MessageHandler:
             response = await GeminiService.queryChatAudio(temp_file_path, user, self.session)
             await WhatsAppService.sendWhatsappMessage(self.message_from, response)
         except Exception as e:
-            print(e)
+            await WhatsAppService.sendWhatsappMessage(self.message_from, f"He tenido un inconveniente al procesar el audio \n\n _Error: {e}_")
     
 

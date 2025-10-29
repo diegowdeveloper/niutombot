@@ -2,7 +2,6 @@ import os
 from .geminiService import GeminiService
 from .httpRequets import HttpRequest
 from typing import Optional, Dict, Any
-import httpx
 
 class WhatsAppService:
 
