@@ -55,7 +55,8 @@ class LangChainGemini:
         langchainService = cls(session, user.id)
         model_llm        = ChatGoogleGenerativeAI(model       = "gemini-2.5-flash",
                                              temperature = 0.5,
-                                             max_tokens  = None)
+                                             max_tokens  = None,
+                                             max_retries = 2)
         
         with_message_history    = RunnableWithMessageHistory(model_llm, langchainService.getSessionHistory)
         results                 = langchainService.getAllPensamientosByIDProfesor(user.id)
@@ -63,8 +64,7 @@ class LangChainGemini:
         if with_message_history:
             response = with_message_history.invoke(
                                         [SystemMessage(content = "Eres un asistente virtual para ayudar a los docentes en sus labores y te llamas Niutom"), HumanMessage(content=user_message)],
-                                        config                 = langchainService.config,
-                                        max_retries            = 2
+                                        config                 = langchainService.config
                                         )
 
             if not response.content:
