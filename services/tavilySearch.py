@@ -11,7 +11,7 @@ class TavilySearch:
 
 
     def initTavilyClient(self):
-        self.tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY")
+        self.tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"),
                                           search_depth="advanced",
                                           include_raw_content=True
                                           )
