@@ -281,7 +281,7 @@ class MessageHandler:
             response = await LangChainGemini.queryChatSimple(self.message_body, user, self.session)
             await WhatsAppService.sendWhatsappMessage(self.message_from, response)
         except Exception as e:
-            print(e)
+            await WhatsAppService.sendWhatsappMessage(self.message_from, "He tenido un inconveniente para procesar la petición.")
 
 
     async def handleAssistantMessageSearchFonts(self):

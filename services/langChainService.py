@@ -60,7 +60,7 @@ class LangChainGemini:
         with_message_history    = RunnableWithMessageHistory(model_llm, langchainService.getSessionHistory)
         results                 = langchainService.getAllPensamientosByIDProfesor(user.id)
 
-        if True:
+        if with_message_history:
             response = with_message_history.invoke(
                                         [SystemMessage(content = "Eres un asistente virtual para ayudar a los docentes en sus labores y te llamas Niutom"), HumanMessage(content=user_message)],
                                         config                 = langchainService.config,
@@ -68,7 +68,7 @@ class LangChainGemini:
                                         )
 
             if not response.content:
-                response_text = GeminiService.queryChatSimple(user_message, user, session)
+                response_text = await GeminiService.queryChatSimple(user_message, user, session)
                 return response_text
 
             return response.content
