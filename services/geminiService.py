@@ -5,6 +5,7 @@ from google.genai.types import UserContent, ModelContent, Part
 from dotenv import load_dotenv
 from models import Pensamiento
 from sqlmodel import select
+from google.cloud import speech
 
 load_dotenv()
 
@@ -37,12 +38,23 @@ class GeminiService:
 
     @staticmethod
     async def processAudioMessage(audio_bytes: bytes):
-        temp_file_path = None
         try:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".ogg") as temp_file:
-                temp_file.write(audio_bytes)
-                temp_file_path = temp_file.name
-                return temp_file_path
+            client_speech    = speech.SpeechClient()
+            audio            = speech.RecognitionAudio(content=audio_bytes)
+            config           = speech.RecognitionConfig(
+                encoding                     = speech.RecognitionConfig.AudioEncoding.OGG_OPUS,
+                language_code                ="es-ES",
+                enable_automatic_punctuation =True
+            )
+
+            response        = client_speech.recognize(config=config, audio=audio)
+            transcription   = ""
+            if response.results:
+                transcription = response.results[0].alternatives[0].transcript
+            else:
+                transcription = "Ha habido un error al intentar procesar el audio, intenta escribiendo."
+
+            return transcription
         except Exception as e:
             print(f"Ha ocurrido un error: {e}")
 
@@ -178,11 +190,11 @@ class GeminiService:
 
 
     @classmethod
-    async def queryChatAudio(cls, temp_file_path, user, session):
+    async def queryChatAudio(cls, transcription, user, session):
         geminiService = cls(session)
 
         chat_history = []
-        results = geminiService.getAllPensamientosByIDProfesor(user.id)
+        results      = geminiService.getAllPensamientosByIDProfesor(user.id)
 
         if not results:
             chat_history = [
@@ -213,9 +225,9 @@ class GeminiService:
             "Si un profesor se equivoca con tu nombre no está permitido que lo corrijas"
         )
 
-        client     = genai.Client()
-        audio_file = client.files.upload(file=temp_file_path)
-        chat   = client.chats.create(
+        client      = genai.Client()
+        audio_file  = client.files.upload(file=temp_file_path)
+        chat        = client.chats.create(
             model   = "gemini-2.5-flash",
             config  = types.GenerateContentConfig(
                 system_instruction = system_instruction,
@@ -227,8 +239,8 @@ class GeminiService:
 
         try:
             response_transcribe = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=["Transcribe este audio, no coloques caracteres especiales como *#- solo texto plano, se permiten signos de pregunta, comas y puntos", audio_file]
+                model       = "gemini-2.5-flash",
+                contents    = ["Transcribe este audio, no coloques caracteres especiales como *#- solo texto plano, se permiten signos de pregunta, comas y puntos", audio_file]
             )
             geminiService.createPensamiento(user.id, "user", response_transcribe.text)
             response = chat.send_message(response_transcribe.text)

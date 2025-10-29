@@ -65,11 +65,23 @@ class MessageHandler:
             await handle.handleMenuOption(option_id)
 
         elif handle.message_type == "audio":
-
             await handle.sendListeningMessage()
-            download_content = await WhatsAppService.downloadMedia(handle.message.get("audio", {}).get("id"))
-            temp_file_path   = await GeminiService.processAudioMessage(download_content)
-            await handle.handleMessageAudio(temp_file_path)
+            audio_id         = handle.message.get("audio", {}).get("id")
+            audio_mime_type  = handle.message.get("audio", {}).get("mime_type")
+            download_url     = await WhatsAppService.downloadMedia(audio_id)
+            audio_bytes      = await WhatsAppService.getBytesOfFile(download_url)
+
+            if not audio_bytes or not download_url:
+                await handle.handleMessageAudio("He tenido un error al procesar el audio, intenta escribiendo")
+                return
+            
+            transcription    = await GeminiService.processAudioMessage(audio_bytes)
+
+            if not transcription:
+               await handle.handleMessageAudio("No he entendido muy bien el audio, por favor intenta escribiendo") 
+               return
+            
+            await handle.handleMessageAudio(transcription)
             await handle.sendChatMenu()
 
         return Response(content = "Mensaje enviado", status_code=200)
@@ -303,11 +315,11 @@ class MessageHandler:
         except Exception as e:
             print(e)
 
-    async def handleMessageAudio(self, temp_file_path):
+    async def handleMessageAudio(self, transcription):
         user = self.getUserByWaID()
 
         try:
-            response = await GeminiService.queryChatAudio(temp_file_path, user, self.session)
+            response = await GeminiService.queryChatSimple(transcription, user, self.session)
             await WhatsAppService.sendWhatsappMessage(self.message_from, response)
         except Exception as e:
             await WhatsAppService.sendWhatsappMessage(self.message_from, f"He tenido un inconveniente al procesar el audio \n\n _Error: {e}_")

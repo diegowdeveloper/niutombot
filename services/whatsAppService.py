@@ -10,8 +10,13 @@ class WhatsAppService:
         metadata_response = await HttpRequest.sendToFile(media_id)
         metadata          = metadata_response.json()
         download_url      = metadata.get("url")
-        download_content  = await HttpRequest.getBytesFile(download_url)
-        return download_content
+        return download_url
+    
+
+    @staticmethod
+    async def getBytesOfFile(download_url: str):
+        audio_bytes       = await HttpRequest.getBytesFile(download_url)
+        return audio_bytes
 
 
     @staticmethod
