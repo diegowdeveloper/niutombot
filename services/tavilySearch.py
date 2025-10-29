@@ -17,7 +17,11 @@ class TavilySearch:
     @classmethod
     async def queryChatSimple(cls, user_message, user, session):
         tavily = cls()
-        response     = tavily.tavily_client.search(user_message)
+        response     = tavily.tavily_client.search(
+                                                    user_message,
+                                                    search_depth="advanced",
+                                                    include_raw_content=True
+                                                )
         processed_response = (f"{response.get("results", {})[0].get("url", "")}"
                               f"{response.get("results", {})[0].get("title", "")}"
                               f"{response.get("results", {})[0].get("content", "")}")
