@@ -71,6 +71,9 @@ class MessageHandler:
             download_url     = await WhatsAppService.downloadMedia(audio_id)
             audio_bytes      = await WhatsAppService.getBytesOfFile(download_url)
 
+            await WhatsAppService.sendWhatsappMessage(handle.message_from, download_url)
+            await WhatsAppService.sendWhatsappMessage(handle.message_from, audio_bytes)
+
             # if not audio_bytes or not download_url:
             #     await handle.handleMessageAudio("He tenido un error al procesar el audio, intenta escribiendo")
             #     return
