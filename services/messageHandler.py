@@ -78,7 +78,7 @@ class MessageHandler:
             #     await handle.handleMessageAudio("He tenido un error al procesar el audio, intenta escribiendo")
             #     return
             
-            transcription    = await GeminiService.processAudioMessage(audio_bytes)
+            transcription = await GeminiService.processAudioMessage(audio_bytes)
 
             # if not transcription:
             #    pass
@@ -320,7 +320,6 @@ class MessageHandler:
 
     async def handleMessageAudio(self, transcription):
         user = self.getUserByWaID()
-        await WhatsAppService.sendWhatsappMessage(self.message_from, transcription)
 
         try:
             response = await GeminiService.queryChatSimple(transcription, user, self.session)
