@@ -19,6 +19,7 @@ class GeminiService:
 
     @staticmethod
     def setupCredentialsSpeechToText():
+        # COnfiguración inicial de Google Spech to Text
         with tempfile.NamedTemporaryFile(mode="w", delete=False) as temp_file:
             json_data                                    = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
             parsed_json                                  = json.loads(json_data)
