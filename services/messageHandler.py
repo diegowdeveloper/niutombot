@@ -71,15 +71,14 @@ class MessageHandler:
             download_url     = await WhatsAppService.downloadMedia(audio_id)
             audio_bytes      = await WhatsAppService.getBytesOfFile(download_url)
 
-            if not audio_bytes or not download_url:
-                await handle.handleMessageAudio("He tenido un error al procesar el audio, intenta escribiendo")
-                return
+            # if not audio_bytes or not download_url:
+            #     await handle.handleMessageAudio("He tenido un error al procesar el audio, intenta escribiendo")
+            #     return
             
             transcription    = await GeminiService.processAudioMessage(audio_bytes)
 
-            if not transcription:
-               await handle.handleMessageAudio("No he entendido muy bien el audio, por favor intenta escribiendo") 
-               return
+            # if not transcription:
+            #    pass
             
             await handle.handleMessageAudio(transcription)
             await handle.sendChatMenu()
@@ -315,8 +314,10 @@ class MessageHandler:
         except Exception as e:
             print(e)
 
+
     async def handleMessageAudio(self, transcription):
         user = self.getUserByWaID()
+        await WhatsAppService.sendWhatsappMessage(self.message_from, transcription)
 
         try:
             response = await GeminiService.queryChatSimple(transcription, user, self.session)
