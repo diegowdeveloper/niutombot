@@ -54,7 +54,7 @@ class LangChainGemini:
         
         langchainService = cls(session, user.id)
         model_llm        = ChatGoogleGenerativeAI(model       = "gemini-2.5-flash",
-                                             temperature = 0.7,
+                                             temperature = 0.5,
                                              max_tokens  = None)
         
         with_message_history    = RunnableWithMessageHistory(model_llm, langchainService.getSessionHistory)
