@@ -71,7 +71,7 @@ class AzureNiutomCompendium:
 
         context = azureNiutomCompendium.obtainContextData(search_results)
         system_message = f"""
-        Eres Niutom y estás en modo Compendium, analiza lo que pide el usuario y responde SOLO con los hechos listados en el texto suministrado:
+        Eres Niutom y estás en modo Compendium, con base a los hechos listados en el siguiente texto responde al usuario:
         Contexto:
         {context}
         """
