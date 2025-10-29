@@ -67,20 +67,10 @@ class MessageHandler:
         elif handle.message_type == "audio":
             await handle.sendListeningMessage()
             audio_id         = handle.message.get("audio", {}).get("id")
-            audio_mime_type  = handle.message.get("audio", {}).get("mime_type")
             download_url     = await WhatsAppService.downloadMedia(audio_id)
             audio_bytes      = await WhatsAppService.getBytesOfFile(download_url)
-
-            # if not audio_bytes or not download_url:
-            #     await handle.handleMessageAudio("He tenido un error al procesar el audio, intenta escribiendo")
-            #     return
             
             transcription = await GeminiService.processAudioMessage(audio_bytes)
-            await WhatsAppService.sendWhatsappMessage(handle.message_from, transcription)
-
-            # if not transcription:
-            #    pass
-            
             await handle.handleMessageAudio(transcription)
             await handle.sendChatMenu()
 
@@ -323,6 +313,6 @@ class MessageHandler:
             response = await GeminiService.queryChatSimple(transcription, user, self.session)
             await WhatsAppService.sendWhatsappMessage(self.message_from, response)
         except Exception as e:
-            await WhatsAppService.sendWhatsappMessage(self.message_from, f"He tenido un inconveniente al procesar el audio \n\n _Error: {e}_")
+            await WhatsAppService.sendWhatsappMessage(self.message_from, f"He tenido un inconveniente al procesar el audio \n\n _Error:_ _{e}_")
     
 

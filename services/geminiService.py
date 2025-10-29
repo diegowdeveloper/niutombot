@@ -1,4 +1,5 @@
 import tempfile
+import os
 from google import genai
 from google.genai import types
 from google.genai.types import UserContent, ModelContent, Part
@@ -8,6 +9,9 @@ from sqlmodel import select
 from google.cloud import speech
 
 load_dotenv()
+json_path                                       = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_PATH")
+absolute_path                                   = os.path.abspath(json_path)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]    = absolute_path
 
 class GeminiService:
 
@@ -43,7 +47,8 @@ class GeminiService:
             audio            = speech.RecognitionAudio(content=audio_bytes)
             config           = speech.RecognitionConfig(
                 encoding                     = speech.RecognitionConfig.AudioEncoding.OGG_OPUS,
-                language_code                ="es-ES"
+                language_code                = "es-ES",
+                sample_rate_hertz            = 16000
             )
 
             response        = client_speech.recognize(config=config, audio=audio)
