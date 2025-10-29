@@ -60,7 +60,7 @@ class LangChainGemini:
         with_message_history    = RunnableWithMessageHistory(model_llm, langchainService.getSessionHistory)
         results                 = langchainService.getAllPensamientosByIDProfesor(user.id)
 
-        if with_message_history:
+        if True:
             response = with_message_history.invoke(
                                         [SystemMessage(content = "Eres un asistente virtual para ayudar a los docentes en sus labores y te llamas Niutom"), HumanMessage(content=user_message)],
                                         config                 = langchainService.config,
