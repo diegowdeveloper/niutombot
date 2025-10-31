@@ -17,7 +17,7 @@ from sqlmodel import select
 from .geminiService import GeminiService
 
 load_dotenv()
-os.environ["GOOGLE_API_KEY"] = os.getenv("GEMINI_API_KEY")
+# os.environ["GOOGLE_API_KEY"] = os.getenv("GEMINI_API_KEY")
 
 class LangChainGemini:
 
@@ -53,7 +53,8 @@ class LangChainGemini:
     async def queryChatSimple(cls, user_message, user, session):
         
         langchainService = cls(session, user.id)
-        model_llm        = ChatGoogleGenerativeAI(model       = "gemini-2.5-flash",
+        model_llm        = ChatGoogleGenerativeAI(google_api_key = os.getenv("GEMINI_API_KEY"),
+                                             model       = "gemini-2.5-flash",
                                              temperature = 0.5,
                                              max_tokens  = None,
                                              max_retries = 2)
@@ -92,7 +93,7 @@ class LangChainGemini:
                 messages,
                 max_tokens    = 1000,
                 strategy      = "last",
-                token_counter = ChatGoogleGenerativeAI(model = "gemini-2.5-flash")
+                token_counter = ChatGoogleGenerativeAI(google_api_key = os.getenv("GEMINI_API_KEY"), model = "gemini-2.5-flash")
             )
 
             return model_llm.invoke(trim_tokens).content
