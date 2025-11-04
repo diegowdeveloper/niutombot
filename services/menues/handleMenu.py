@@ -108,7 +108,7 @@ class HandleMenu:
                     },
                     {
                         "id": "limitaciones",
-                        "title": "Limitaciones del asistente 🐢",
+                        "title": "Limitaciones 🐢",
                         "description": "Pros y contras"
                     }
                 ]
