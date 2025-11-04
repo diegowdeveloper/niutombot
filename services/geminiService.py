@@ -65,7 +65,7 @@ class GeminiService:
             if response.results:
                 transcription = response.results[0].alternatives[0].transcript
             else:
-                transcription = "Ha habido un error al intentar procesar el audio, intenta escribiendo."
+                transcription = "Ha habido un error al intentar procesar el audio, hazle saber al docente que ha ocurrido un error y que lo intente ahora por texto"
 
             return transcription
         except Exception as e:
