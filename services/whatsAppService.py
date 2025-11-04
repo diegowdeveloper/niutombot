@@ -37,6 +37,33 @@ class WhatsAppService:
             data["context"] = {"message_id": context_message_id}
 
         try:
+            response = await HttpRequest.sendToWhatsApp(data)
+            response.raise_for_status() # Lanza una excepción para códigos de estado 4xx/5xx
+            print("Mensaje de respuesta enviado con éxito.")
+
+        except Exception as e:
+            return f"Error de conexión al enviar el mensaje: {e}"
+        
+
+    @staticmethod
+    async def sendWhatsappMessageURL(to: str, text_body: str, context_message_id: str = None):
+        """
+        Envía una respuesta de texto a un usuario de WhatsApp.
+        """
+        data = {
+            "messaging_product": "whatsapp",
+            "to": to,
+            "text": {
+                "preview_url": True,
+                "body": text_body
+            }
+        }
+
+        if context_message_id:
+            # Esto hace que el mensaje de respuesta aparezca como una respuesta al original
+            data["context"] = {"message_id": context_message_id}
+
+        try:
 
             response = await HttpRequest.sendToWhatsApp(data)
             response.raise_for_status() # Lanza una excepción para códigos de estado 4xx/5xx
@@ -70,8 +97,42 @@ class WhatsAppService:
 
     
     @staticmethod
-    async def sendInteractiveButtons(to, body_text, buttons):
+    async def sendInteractiveList(to, list_menu_message, sections):
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": to,
+            "type": "interactive",
+            "interactive": {
+                "type": "list",
+                "header": {
+                    "type": "text",
+                    "text": "Menú de inicio ⚛️"
+                },
+                "body": {
+                    "text": list_menu_message
+                },
+                "footer": {
+                    "text": "Niutom Asistente Virtual"
+                },
+                "action": {
+                    "button": "Ver opciones",
+                    "sections": sections
+                }
+            }
+        }
 
+        try:
+            response = await HttpRequest.sendToWhatsApp(data)
+            response.raise_for_status()
+        except Exception as e:
+            print(f"Error al enviar el mensaje de WhatsApp: {e.response.text}")
+        except Exception as e:
+            print(f"Error de conexión al enviar el mensaje: {e}")
+
+
+    @staticmethod
+    async def sendInteractiveButtons(to, body_text, buttons):
         data = {
             "messaging_product": "whatsapp",
             "to": to,

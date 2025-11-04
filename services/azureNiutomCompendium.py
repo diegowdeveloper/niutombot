@@ -59,8 +59,6 @@ class AzureNiutomCompendium:
     @classmethod
     async def queryCompendium(cls, message, user, session):
         azureNiutomCompendium = cls()
-        # query_vector          = await azureNiutomCompendium.getEmbedding(message)
-        # print(query_vector)
         search_results        = azureNiutomCompendium.search_client.search(
             None,
             top=3,

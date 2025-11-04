@@ -29,7 +29,6 @@ async def verify_webhook(req: Request):
 @router.post("/webhook")
 async def receive_webhook(req: Request, session: SessionDep):
     try:
-        
         payload     = await req.json()
         message     = payload.get("entry", [{}])[0].get("changes", [{}])[0].get("value", {}).get("messages", [{}])[0]
         sender_info = payload.get("entry", [{}])[0].get("changes", [{}])[0].get("value", {}).get("contacts", [{}])[0]
@@ -37,7 +36,5 @@ async def receive_webhook(req: Request, session: SessionDep):
         if message:
             await MessageHandler.handleIncomingMessage(message, sender_info, session)
             
-
     except Exception as e:
-
         return Response(content = f"Ha ocurrido un error: {e}", status_code=500)

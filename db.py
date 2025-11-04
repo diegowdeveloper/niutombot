@@ -3,8 +3,8 @@ from fastapi import FastAPI, Depends
 from sqlmodel import Session, create_engine, SQLModel
 
 sqlite_name = "db.sqlite3"
-# sqlite_url  = f"sqlite:///{sqlite_name}"
-sqlite_url  = f"postgresql://postgres:AXPcjlOnfXZwsqXUsJbJKrpxCCKNxxNZ@postgres.railway.internal:5432/railway"
+sqlite_url  = f"sqlite:///{sqlite_name}"
+# sqlite_url  = f"postgresql://postgres:AXPcjlOnfXZwsqXUsJbJKrpxCCKNxxNZ@postgres.railway.internal:5432/railway"
 
 engine = create_engine(sqlite_url)
 

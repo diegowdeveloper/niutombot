@@ -50,7 +50,6 @@ class GeminiService:
 
     @staticmethod
     async def processAudioMessage(audio_bytes: bytes):
-
         try:
             GeminiService.setupCredentialsSpeechToText()
             client_speech    = speech.SpeechClient()

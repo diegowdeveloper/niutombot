@@ -91,7 +91,7 @@ class LangChainGemini:
 
             trim_tokens = trim_messages(
                 messages,
-                max_tokens    = 1000,
+                max_tokens    = 5000,
                 strategy      = "last",
                 token_counter = ChatGoogleGenerativeAI(google_api_key = os.getenv("GEMINI_API_KEY"), model = "gemini-2.5-flash")
             )
