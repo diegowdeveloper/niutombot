@@ -29,6 +29,8 @@ class HandleAssistantAudio:
                 response = await LangChainGemini.queryChatSimple(transcription, user, session)
             elif chatmode == "niutom_resumen":
                 response = await AzureNiutomCompendium.queryCompendium(transcription, user, session)
+            elif chatmode == "tavily_mode":
+                response = await TavilySearch.queryChatSimple(transcription, user, session)
 
             await WhatsAppService.sendWhatsappMessage(to, response)
 
