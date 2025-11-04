@@ -1,10 +1,14 @@
+import os
 from typing import Annotated
 from fastapi import FastAPI, Depends
 from sqlmodel import Session, create_engine, SQLModel
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # sqlite_name = "db.sqlite3"
 # sqlite_url  = f"sqlite:///{sqlite_name}"
-sqlite_url  = f"postgresql://postgres:AXPcjlOnfXZwsqXUsJbJKrpxCCKNxxNZ@postgres.railway.internal:5432/railway"
+sqlite_url  = os.getenv("POSTGRE_URL")
 
 engine = create_engine(sqlite_url)
 

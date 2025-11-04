@@ -35,7 +35,7 @@ class UserPointer:
             user = session.exec(select(Profesor).where(Profesor.wa_id == sender_data["wa_id"])).first()
 
             if user:
-                return 
+                return True
             
             return False
         
