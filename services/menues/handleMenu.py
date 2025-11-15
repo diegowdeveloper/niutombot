@@ -32,7 +32,7 @@ class HandleMenu:
             message_reply = "Responder esta breve encuesta permitirá recolectar y analizar datos sobre el uso de los agentes inteligentes como herramientas para ayudar a complementar a los docentes en su planificación escolar. Responde a esta encuesta solo si ya has probado la versión de *Niutom 1.4.0*"
             await self.sendMenuEncuesta(to)
         elif option_id == "si":
-            message_reply = "Aquí tienes la encuesta 🥳... \n *https://docs.google.com/forms/d/1vslSTJGEyYfKPY-T2Ln0Z2HCdPdtQSuHlKrw_oPenXg/edit*"
+            message_reply = "Aquí tienes la encuesta 🥳... \n *https://forms.gle/VkiBPK7pQxKona4h8*"
         elif option_id == "no":
             message_reply = "Te invito a usar mi nueva versión 1.4.1 para completar esta encuesta 👇🏼"
             await self.sendWelcomeListMenu(to)
