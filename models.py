@@ -1,15 +1,23 @@
 from pydantic import BaseModel
 from sqlmodel import SQLModel, Field, Relationship
 
+class MensajeBase(SQLModel):
+    message_id: str = Field(default = None)
+
+
+class Mensaje(MensajeBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+
+
 class ProfesorBase(SQLModel):
     name: str        = Field(default = None)
     wa_id: str       = Field(default = None)
-    mode: str | None = Field(default = None)
+    mode: str | None = Field(default = "niutom_basico")
     new_user: bool   = Field(default = True)
 
 
 class Profesor(ProfesorBase, table = True):
-    id: int | None                  = Field(default = None, primary_key = True)
+    id: int | None                   = Field(default = None, primary_key = True)
     pensamientos: list["Pensamiento"] = Relationship(back_populates = "profesor")
 
 

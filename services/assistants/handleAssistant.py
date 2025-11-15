@@ -14,7 +14,7 @@ class HandleAssistant:
         user = user_pointer.getUserByWaID(session, sender_data)
 
         try:
-            response = await TavilySearch.queryChatSimple(message_body, user, session)
+            response = await TavilySearch.queryChat(message_body, user, session)
             await WhatsAppService.sendWhatsappMessage(to, response)
         except Exception as e:
             print(e)
@@ -34,7 +34,7 @@ class HandleAssistant:
         user = user_pointer.getUserByWaID(session, sender_data)
 
         try:
-            response = await GeminiService.queryChatSimple(message_body, user, session)
+            response = await GeminiService.queryChat(message_body, user, session)
             await WhatsAppService.sendWhatsappMessage(to, response)
         except Exception as e:
             print(e)
@@ -44,7 +44,7 @@ class HandleAssistant:
             user = user_pointer.getUserByWaID(session, sender_data)
 
             try:
-                response = await LangChainGemini.queryChatSimple(message_body, user, session)
+                response = await LangChainGemini.queryChat(message_body, user, session)
                 await WhatsAppService.sendWhatsappMessage(to, response)
             except Exception as e:
                 await WhatsAppService.sendWhatsappMessage(to, f"He tenido un inconveniente para procesar la petición. \n\n _código de error: {e}_")
@@ -54,7 +54,7 @@ class HandleAssistant:
         user = user_pointer.getUserByWaID(session, sender_data)
 
         try:
-            response = await AzureNiutomCompendium.queryCompendium(message_body, user, session)
+            response = await AzureNiutomCompendium.queryChat(message_body, user, session)
             await WhatsAppService.sendWhatsappMessage(to, response)
         except Exception as e:
             print(e)

@@ -1,7 +1,7 @@
 from .handleAssistant import HandleAssistant
-from .handleAssistantAudio import HandleAssistantAudio
+from .handleAssistantMedia import HandleAssistantMedia
 
 __all__ = [
     "HandleAssistant",
-    "HandleAssistantAudio"
+    "HandleAssistantMedia"
 ]

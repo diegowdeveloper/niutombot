@@ -12,10 +12,10 @@ class HandleMenu:
 
         if option_id == 'cambiar_modelo':
             message_reply   = f"Volvamos al comienzo"
-            await self.sendWelcomeListMenu(to)     
+            await self.sendWelcomeListMenu(to)
         elif option_id == 'niutom_basico':
             user_pointer.updateUser(session, user, option_id)
-            message_reply = await GeminiService.queryChatSimple("¡Hola Niutom! ☺", user, session)
+            message_reply = await GeminiService.queryChat("¡Hola Niutom! ☺", user, session)
         elif option_id == 'niutom_pro': 
             user_pointer.updateUser(session, user, option_id)
             message_reply = "Ahora has cambiado al modo Niutom Pro, puedo ayudarte de manera más eficiente"

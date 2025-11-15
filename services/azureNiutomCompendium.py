@@ -4,12 +4,14 @@ from azure.search.documents import SearchClient
 from azure.core.credentials import AzureKeyCredential
 from dotenv import load_dotenv
 from azure.search.documents.models import VectorizedQuery, VectorizableTextQuery
+from .llmModel import LLMModel
 
 load_dotenv()
 
-class AzureNiutomCompendium:
+class AzureNiutomCompendium(LLMModel):
 
-    def __init__(self):
+    def __init__(self, session):
+        super().__init__(session)
         self.setOpenAICLient()
         self.setSearchClient()
 
@@ -57,8 +59,8 @@ class AzureNiutomCompendium:
     
 
     @classmethod
-    async def queryCompendium(cls, message, user, session):
-        azureNiutomCompendium = cls()
+    async def queryChat(cls, message, user, session):
+        azureNiutomCompendium = cls(session)
         search_results        = azureNiutomCompendium.search_client.search(
             None,
             top=3,

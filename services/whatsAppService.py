@@ -155,11 +155,3 @@ class WhatsAppService:
             print(f"Error al enviar el mensaje de WhatsApp: {e.response.text}")
         except Exception as e:
             print(f"Error de conexión al enviar el mensaje: {e}")
-
-
-    @staticmethod
-    async def sendMediaMessage(to: str, type: str, media_url: str, caption: str = None):
-        try:
-            pass
-        except Exception as e:
-            print(e)
