@@ -75,7 +75,7 @@ class HandleMenu:
         list_menu_message = f"Elije una opción 👇🏽"
         sections          = [
             {
-                "title": "",
+                "title": "Responder encuesta",
                 "rows": [
                     {
                         "id": "responder_encuesta",
