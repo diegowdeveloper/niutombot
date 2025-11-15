@@ -101,6 +101,7 @@ class MessageHandler:
             else:
                 await cls.handle_assistant.handleAssistantMessageNiutomDefault(handle.message_from, sender_data, cls.user_pointer, handle.session, handle.message_body)
                 await cls.handle_menu.sendWelcomeListMenu(handle.message_from)
+                await cls.handle_menu.sendChatMenu(handle.message_from)
 
 
         elif handle.message_type == "interactive":
