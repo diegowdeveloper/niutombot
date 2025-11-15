@@ -28,6 +28,14 @@ class HandleMenu:
         elif option_id == "tavily_mode":
             user_pointer.updateUser(session, user, option_id)
             message_reply = "¿Qué te gustaría buscar?"
+        elif option_id == "responder_encuesta":
+            message_reply = "Responder esta breve encuesta permitirá recolectar y analizar datos sobre el uso de los agentes inteligentes como herramientas para ayudar a complementar a los docentes en su planificación escolar. Responde a esta encuesta solo si ya has probado la versión de *Niutom 1.4.0*"
+            await self.sendMenuEncuesta(to)
+        elif option_id == "si":
+            message_reply = "Aquí tienes la encuesta 🥳... \n *https://docs.google.com/forms/d/1vslSTJGEyYfKPY-T2Ln0Z2HCdPdtQSuHlKrw_oPenXg/edit*"
+        elif option_id == "no":
+            message_reply = "Te invito a usar mi nueva versión 1.4.1 para completar esta encuesta 👇🏼"
+            await self.sendWelcomeListMenu(to)
         elif option_id == "que_es":
             message_reply = "https://trescomasagency.com/niutom/\n Aquí tienes...\n ¿Qué es Niutom? 🤷\n"
         elif option_id == "uso":
@@ -66,6 +74,16 @@ class HandleMenu:
     async def sendWelcomeListMenu(self, message_from):
         list_menu_message = f"Elije una opción 👇🏽"
         sections          = [
+            {
+                "title": "",
+                "rows": [
+                    {
+                        "id": "responder_encuesta",
+                        "title": "Responder 😁",
+                        "description": "Responde a una breve encuesta"
+                    }
+                ]
+            },
             {
                 "title": "Modelos",
                 "rows": [
@@ -140,6 +158,27 @@ class HandleMenu:
                 "reply": {
                     "id": "reportar_falla",
                     "title": "Reportar problema"
+                }
+            }
+        ]
+        await WhatsAppService.sendInteractiveButtons(message_from, menu_message, buttons)
+
+
+    async def sendMenuEncuesta(self, message_from):
+        menu_message = "Ya has probado *Niutom V1.4.0*"
+        buttons = [
+            {
+                "type": "reply",
+                "reply": {
+                    "id": "si",
+                    "title": "Si ✅"
+                }
+            },
+            {
+                "type": "reply",
+                "reply": {
+                    "id": "no",
+                    "title": "No ❌"
                 }
             }
         ]
