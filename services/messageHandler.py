@@ -101,7 +101,6 @@ class MessageHandler:
             else:
                 await cls.handle_assistant.handleAssistantMessageNiutomDefault(handle.message_from, sender_data, cls.user_pointer, handle.session, handle.message_body)
                 await cls.handle_menu.sendWelcomeListMenu(handle.message_from)
-                await cls.handle_menu.sendChatMenu(handle.message_from)
 
 
         elif handle.message_type == "interactive":
@@ -135,6 +134,7 @@ class MessageHandler:
             mime_type       = message.get("image", {}).get("mime_type")
             caption         = message.get("image", {}).get("caption", "Analiza esta imagen")
             await cls.handle_media.handleMessageImage(handle.session, cls.user_pointer, sender_data, handle.message_from, image_bytes, mime_type, caption, chatmode)
+            await cls.handle_menu.sendChatMenu(handle.message_from)
 
         return Response(content = "Mensaje enviado", status_code=200)
 
