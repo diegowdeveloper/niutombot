@@ -99,7 +99,6 @@ class GeminiService(LLMModel):
         rules       = (
             "Te llamas Niutom, eres un asistente virtual que habla siempre en castellano"
             "siempre responderás en castellano sin importar si buscas fuentes en otros idiomas"
-            f"sigue estas reglas SOLO si te piden un temario de contenidos o plan de evaluación: {geminiModel.indicaciones}"
             f"comunícate siguiendo SIEMPRE estas reglas: {geminiModel.comunicacion}."
             "analiza la imagen que te han proporcionado"
             "toma en cuenta que el formato de salida es en un mensaje de WhatsApp"
@@ -169,7 +168,6 @@ class GeminiService(LLMModel):
         rules       = (
             "Te llamas Niutom, eres un asistente virtual que habla siempre en castellano"
             "siempre responderás en castellano sin importar si buscas fuentes en otros idiomas"
-            f"sigue estas reglas SOLO si te piden un temario de contenidos o plan de evaluación: {geminiModel.indicaciones}"
             f"comunícate siguiendo SIEMPRE estas reglas: {geminiModel.comunicacion}."
             f"Usa este contexto como complemento para responder: {context}"
             "toma en cuenta que el formato de salida es en un mensaje de WhatsApp"
