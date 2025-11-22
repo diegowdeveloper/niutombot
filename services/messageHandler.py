@@ -74,7 +74,7 @@ class MessageHandler:
         chatmode     = cls.user_pointer.getChatMode(session, sender_data)
         _user_exists = cls.user_pointer.searchUser(session, sender_data)
 
-        end_message = "¡Hola! Gracias por usar Niutom. Este asistente virtual ha finalizado su período de uso. Con base a las respuestas que dejaste en la encuesta este bot fue presentado como trabajo de grado por Diego Castro para optar al título de Ingeniero en Informática en la Universidad Alejandro de Humboldt. De antemano quiero agradecerte por usar el asistente ya que me ayudaste a completar de mi carrera, fueron años de trabajo duro y dedicación. Sin más, quiero decirte que no claudiques en el ejercicio de dar clase, es un pilar fundamental para la sociedad, y que espero que este proyecto sea el antecedente de una cadena de investigaciones que permitan ayudar a los docentes en su labor. 👨🏼‍🏫🎆🎊👩🏼‍🏫🎇🎉"
+        end_message = "¡Hola! Gracias por usar Niutom. Este asistente virtual ha finalizado su período de uso. Con base a las respuestas que dejaste en la encuesta este bot fue presentado como trabajo de grado por Diego Castro para optar al título de Ingeniero en Informática en la Universidad Alejandro de Humboldt. De antemano quiero agradecerte por usar el asistente ya que me ayudaste a completar mi carrera, fueron años de trabajo duro y dedicación. Sin más, quiero decirte que no claudiques en el ejercicio de dar clase, es un pilar fundamental para la sociedad, y espero que este proyecto sea el antecedente de una cadena de investigaciones que permitan ayudar a los docentes en su labor. 👨🏼‍🏫🎆🎊👩🏼‍🏫🎇🎉"
 
         WhatsAppService.sendWhatsappMessage(handle.message_from, end_message, handle.message_id)
 
