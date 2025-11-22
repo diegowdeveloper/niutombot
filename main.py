@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, Response
 from routers import webhook
 from db import create_all_tables
-
+from services.whatsAppService import WhatsAppService
 
 app = FastAPI(
     title       ="Asistente virtual inteligente Niutom",
